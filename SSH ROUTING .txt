@@ -1,0 +1,198 @@
+SSH ROUTING 
+
+EN
+CONF T
+HOSTNAME BR-MultilayerSW2
+enable password cisco
+no ip domain lookup
+line console 0
+password cisco
+login
+exit
+service password-encryption
+
+ip domain name cisco.net
+username admin password cisco
+crypto key generate rsa
+1024
+line vty 0 15
+login local
+transport input ssh
+exit
+
+do wr
+
+
+
+
+VLAN ASSIGNMENT TO MULTILAYER SWITCHES 55;00
+
+vlan 10
+vlan 20
+vlan 30
+vlan 40
+vlan 50
+vlan 60
+vlan 70
+vlan 80
+vlan 90
+vlan 100
+vlan 110
+vlan 120
+vlan 130
+
+
+int range gig1/0/2-7
+switchport mode trunk
+exit
+
+
+
+
+
+subnetting  1:04:30
+
+
+en
+conf t
+int gig1/0/1
+no switchport
+ip address 192.168.102.85 255.255.255.252
+ex
+
+do wr
+
+
+en
+conf t
+int gig1/0/1
+no switchport
+ip address 192.168.102.93 255.255.255.252
+ex
+
+do wr
+
+en
+conf t
+int gig1/0/1
+no switchport
+ip address 192.168.102.97 255.255.255.252
+ex
+
+do wr
+
+
+
+
+
+
+
+ospf ip routing  1:24:27
+
+ip routing
+router ospf 10
+network 192.168.100.0 0.0.0.63 area 0
+network 192.168.100.64 0.0.0.63 area 0
+network 192.168.100.128 0.0.0.63 area 0
+network 192.168.100.192 0.0.0.63 area 0
+network 192.168.101.0 0.0.0.63 area 0
+network 192.168.101.64 0.0.0.63 area 0
+network 192.168.102.84 0.0.0.3 area 0
+ex
+do wr
+
+ip route 0.0.0.0 0.0.0.0 192.168.102.86
+do wr
+
+ip routing
+router ospf 10
+network 192.168.101.128 0.0.0.31 area 0
+network 192.168.101.160 0.0.0.31 area 0
+network 192.168.101.192 0.0.0.31 area 0
+network 192.168.101.224 0.0.0.31 area 0
+network 192.168.102.0 0.0.0.31 area 0
+network 192.168.102.32 0.0.0.31 area 0
+
+network 192.168.102.92 0.0.0.3 area 0
+
+
+ex
+
+ip route 0.0.0.0 0.0.0.0 192.168.102.94
+
+
+
+ip routing
+router ospf 10
+network 192.168.101.128 0.0.0.31 area 0
+network 192.168.101.160 0.0.0.31 area 0
+network 192.168.101.192 0.0.0.31 area 0
+network 192.168.101.224 0.0.0.31 area 0
+network 192.168.102.0 0.0.0.31 area 0
+network 192.168.102.32 0.0.0.31 area 0
+
+network 192.168.102.96 0.0.0.3 area 0
+
+
+ex
+
+ip route 0.0.0.0 0.0.0.0 192.168.102.98
+
+
+
+
+
+
+
+DHCP HELPER ADDRESS AND INTER VLAN 2:00:00
+
+
+int vlan 10
+ip address 192.168.100.1 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 20
+ip address 192.168.100.65 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 30
+ip address 192.168.100.129 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 40
+ip address 192.168.100.193 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 50
+ip address 192.168.101.1 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 60
+ip address 192.168.101.65 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 80
+ip address 192.168.101.129 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 90
+ip address 192.168.101.161 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 100
+ip address 192.168.101.193 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 110
+ip address 192.168.101.255 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 120
+ip address 192.168.102.1 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 130
+ip address 192.168.102.33 255.255.255.192
+ip helper-address 192.168.102.67
+
+

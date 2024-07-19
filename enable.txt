@@ -1,0 +1,171 @@
+enable
+conf t
+
+vlan 70
+name SSS
+exit
+
+int range fa0/1-2
+switchport mode trunk 
+exit
+
+int range fa0/3-24
+switchport mode access 
+switchport access vlan 70
+exit
+
+
+enable 
+conf t
+vlan 80
+vlan 90
+vlan 100
+vlan 110
+vlan 120
+vlan 130
+
+
+
+OSPF ROUTING 
+enable
+conf t
+ip routing
+router ospf 10
+network 192.168.101.128 0.0.0.31 area 0
+network 192.168.101.160 0.0.0.31 area 0
+network 192.168.101.192 0.0.0.31 area 0
+network 192.168.101.224 0.0.0.31 area 0
+network 192.168.102.0 0.0.0.31 area 0
+network 192.168.102.32 0.0.0.31 area 0
+
+network 192.168.102.96 0.0.0.3 area 0
+
+
+ex
+
+ip route 0.0.0.0 0.0.0.0 192.168.102.98
+
+
+FOR ROUTER
+enable
+conf t
+
+router ospf 10
+network 192.168.102.80 0.0.0.3 area 0
+network 192.168.102.84 0.0.0.3 area 0
+network 192.168.102.88 0.0.0.3 area 0
+network 192.168.102.64 0.0.0.15 area 0
+network 195.136.17.4 0.0.0.3 area 0
+network 195.136.17.0 0.0.0.3 area 0
+
+network 192.168.102.96 0.0.0.3 area 0
+
+
+ex
+
+ip route 0.0.0.0 0.0.0.0 195.136.17.2
+ip route 0.0.0.0 0.0.0.0 195.136.17.6 70
+do wr
+
+
+enable
+conf t
+
+router ospf 10
+network 192.168.102.92 0.0.0.3 area 0
+network 192.168.102.96 0.0.0.3 area 0
+network 192.168.102.88 0.0.0.3 area 0
+network 195.136.17.8 0.0.0.3 area 0
+network 195.136.17.12 0.0.0.3 area 0
+
+network 192.168.102.96 0.0.0.3 area 0
+
+
+ex
+
+ip route 0.0.0.0 0.0.0.0 195.136.17.14
+ip route 0.0.0.0 0.0.0.0 195.136.17.10 70
+do wr
+
+
+
+enable
+conf t
+
+router ospf 10
+
+network 195.136.17.8 0.0.0.3 area 0
+network 195.136.17.0 0.0.0.3 area 0
+ex
+
+do wr
+
+enable
+conf t
+
+router ospf 10
+
+network 195.136.17.4 0.0.0.3 area 0
+network 195.136.17.12 0.0.0.3 area 0
+ex
+
+do wr
+
+
+inter vlan and helper address 
+
+int vlan 10
+ip address 192.168.100.1 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 20
+ip address 192.168.100.65 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 30
+ip address 192.168.100.129 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 40
+ip address 192.168.100.193 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 50
+ip address 192.168.101.1 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 60
+ip address 192.168.101.65 255.255.255.192
+ip helper-address 192.168.102.67
+
+
+int vlan 80
+ip address 192.168.101.129 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 90
+ip address 192.168.101.161 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 100
+ip address 192.168.101.193 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 110
+ip address 192.168.101.255 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 120
+ip address 192.168.102.1 255.255.255.224
+ip helper-address 192.168.102.67
+
+int vlan 130
+ip address 192.168.102.33 255.255.255.192
+ip helper-address 192.168.102.67
+
+
+
+
+
+
+
